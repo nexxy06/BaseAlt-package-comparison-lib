@@ -10,7 +10,23 @@ class AltLinuxAPI:
         self.timeout = timeout
 
     def get_binary_packages(self, branch: str):
-        """Get binary packages for brach"""
+        """
+        Retrieves binary packages list for specified ALT Linux branch.
+
+        Args:
+            branch: Branch name (e.g. 'p11', 'p10', 'sisyphus')
+
+        Returns:
+            List of package dictionaries with structure:
+            [
+                {
+                    'name': str,      # Package name (e.g. 'bash')
+                    'version': str,   # Version string (e.g. '5.1.16')
+                    'arch': str       # Architecture (e.g. 'x86_64')
+                },
+                ...
+            ]
+        """
         url = f"https://rdb.altlinux.org/api/export/branch_binary_packages/{branch}"
 
         try:
@@ -49,7 +65,22 @@ class AltLinuxAPI:
                    > LooseVersion(re.sub(r'[a-zA-Zа-яА-Я]', '', v2))
 
     def compare_branches(self, branch1: str, branch2: str):
-        """Package comparison between two branches"""
+        """
+        Compares packages between two ALT Linux branches.
+
+        Args:
+            branch1: First branch name to compare
+            branch2: Second branch name to compare
+
+        Returns:
+            Dictionary with comparison results:
+            {
+                'unique_to_first': set(),
+                'unique_to_second': set(),
+                'newer_in_first': set()     # Packages where version in branch1
+                                          # is newer than in branch2
+            }
+        """
         packages1 = self.get_binary_packages(branch1)
         packages2 = self.get_binary_packages(branch2)
 

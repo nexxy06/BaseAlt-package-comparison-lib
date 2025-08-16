@@ -14,6 +14,7 @@ python -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -e .
 ```
 3. Health check
 ```bash
+altlinux-compare --help
 altlinux-compare compare-branches p11 p10
 ```
 
