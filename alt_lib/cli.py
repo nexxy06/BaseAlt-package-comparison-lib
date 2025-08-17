@@ -17,22 +17,22 @@ def get_packages(branch):
         branch: Branch name (e.g. 'p11', 'p10', 'sisyphus')\n
 
     Returns:\n
-        List of package dictionaries with structure:\n
-        [\n
-            {\n
-                'name': str,      # Package name (e.g. 'bash')\n
-                'version': str,   # Version string (e.g. '5.1.16')\n
-                'arch': str       # Architecture (e.g. 'x86_64')\n
-            },
-            ...
-        ]
+        {\n
+            'x86_64': {\n
+                'bash': '5.1.16',\n
+                'curl': '7.76.1'\n
+            },\n
+            'aarch64': {\n
+                'bash': '5.1.16',\n
+                'python3': '3.9.5'\n
+            }\n
+        }\n
     """
     api = AltLinuxAPI()
     try:
-        packages = api.get_binary_packages(branch)
-        click.echo(f"Packages in {branch}: {len(packages)}")
-        for pkg in packages:
-            click.echo(f"{pkg['name']}-{pkg['version']}")
+        packages = api.get_binary_packages("p11")
+        for arch in packages.keys():
+            click.echo(packages[arch])
     except Exception as e:
         click.echo(f"Error: {e}", err=True)
 
@@ -49,23 +49,22 @@ def compare_branches(branch1, branch2):
         branch2: Second branch name to compare
 
     Returns:\n
-        Dictionary with comparison results:\n
+        Dictionary with comparison results by architecture:
         {\n
-            'unique_to_first': set(),\n
-            'unique_to_second': set(),\n
-            'newer_in_first': set()     # Packages where version in branch1\n
-                                        # is newer than in branch2
-        }
+            'x86_64': {\n
+                'unique_to_first': ['package1', 'package2'],\n
+                'unique_to_second': ['package3'],\n
+                'newer_in_first': ['bash', 'curl']\n
+            },\n
+            'aarch64': {
+                ...\n
+            }\n
+        }\n
     """
     api = AltLinuxAPI()
     try:
         result = api.compare_branches(branch1, branch2)
         click.echo(result)
-        click.echo(f"Comparison between {branch1} and {branch2}:")
-        click.echo(f"Unique to {branch1}: {len(result['unique_to_first'])}")
-        click.echo(f"Unique to {branch2}: {len(result['unique_to_second'])}")
-        click.echo(f"The packages are newer in {branch1}: \
-                   {len(result['newer_in_first'])}")
     except Exception as e:
         click.echo(f"Error: {e}", err=True)
 
