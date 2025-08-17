@@ -29,7 +29,8 @@ class AltLinuxAPI:
                 }
             }
         """
-        url = f"https://rdb.altlinux.org/api/export/branch_binary_packages/{branch}"
+        BASE_URL = "https://rdb.altlinux.org/api/"
+        url = f"{BASE_URL}export/branch_binary_packages/{branch}"
 
         try:
             response = self.session.get(url, timeout=self.timeout)
@@ -104,7 +105,8 @@ class AltLinuxAPI:
 
             newer_in_first = []
             for pkg in set(arch_pkgs1.keys()) & set(arch_pkgs2.keys()):
-                if self.compare_loose_versions(arch_pkgs1[pkg], arch_pkgs2[pkg]):
+                if self.compare_loose_versions(arch_pkgs1[pkg],
+                                               arch_pkgs2[pkg]):
                     newer_in_first.append(pkg)
 
             result[arch] = {
