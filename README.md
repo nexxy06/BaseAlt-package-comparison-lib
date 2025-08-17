@@ -16,6 +16,7 @@ Makes a comparison of the received package lists and outputs JSON in which it wi
     all packages that are in the 2nd but are not in the 1st
     
     all packages whose version is greater in the 1st than in the 2nd
+
 ## Prerequisites
 - Python 3.7 or higher
 - pip 24.2 or higher
@@ -32,7 +33,7 @@ cd BaseAlt-package-comparison-lib
 - Linux/macOS:
 ```bash
 # Create virtual environment
-python -m venv venv
+python3 -m venv venv
 
 # Activate environment
 source venv/bin/activate
@@ -41,15 +42,15 @@ source venv/bin/activate
 - Windows:
 ```bash
 # Create virtual environment
-python -m venv venv
+python3 -m venv venv
 
 # Activate environment  
 venv\Scripts\activate
 ```
 ### 3. Installing dependencies
 ```bash
-python -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --upgrade pip setuptools wheel
-python -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple .
+python3 -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --upgrade pip setuptools wheel
+python3 -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple .
 ```
 If the mirror is unavailable, try another one or without "-i https://pypi.tuna.tsinghua.edu.cn/simple".
 ### 4. Health check
